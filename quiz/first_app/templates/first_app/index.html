@@ -1,0 +1,88 @@
+{% extends "first_app/base.html" %}
+{% block body_block %}
+
+<div class = "QusetionList">
+<p>
+<table width="400" border="10" align="center" margintop="12px">
+   
+  {% if user.is_superuser %} 
+    <tr><td>Question status</td> 
+      <td>Question list (click to edit)</td>
+    </tr>
+    <tr><td>0 Daft</td> 
+      <td>{% if question_list1 %}
+            {% for question in question_list1 %}
+              <a href="{% url 'first_app:question_status_modify' question.id %}">{{ question }} </a>
+            {% endfor %}
+          {%else%}
+            None
+          {% endif %}
+      </td>
+    </tr>
+    <tr><td>1 Voting</td> 
+      <td>{% if question_list2 %}
+            {% for question in question_list2 %}  
+              <li><a href="{% url 'first_app:detail' question.id %}">{{ question }}</a></li>
+            {% endfor%}
+          {%else%}
+            None
+          {% endif %}
+      </td>
+    </tr>
+    <tr><td>2 End</td> 
+      <td>
+            {% if question_list3 %}
+            {% for question in question_list3 %}
+              {% comment %} <li><a href="{% url 'first_app:detail3' question.id %}">{{ question }}</a></li> {% endcomment %}
+              <a href="{% url 'first_app:index' %}">{{ question }}</a>            
+            {% endfor %}
+          {%else%}
+            None
+          {% endif %}
+      </td>
+    </tr>
+ 
+    <tr><td>3 Delete</td> 
+      <td>{% if question_list4 %}
+            {% for question in question_list4 %}
+              {{ question }}
+            {% endfor %}
+          {%else%}
+            None
+          {% endif %}
+      </td>
+    </tr>
+  {% else %}
+    {% if user.is_active %} 
+    <h3> Here are ongoing questions you can vote: </h3>
+    <ul>
+      {% if question_list2 %}
+            {% for question in question_list2 %}  
+              <li><a href="{% url 'first_app:detail1' question.id %}">{{ question }}</a></li>
+            {% endfor%}
+      {% endif %}
+    </ul>
+    <h3>Here are questions having ended the vote, you can click to see the results:</h3>
+     <ul>
+      {% if question_list3 %}
+            {% for question in question_list3 %}  
+              <li><a href="">{{ question }}</a></li>
+            {% endfor%}
+      {% endif %}
+    </ul>
+
+    
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}
+
+
+ {% comment %} {% if latest_question_list and user.is_authenticated %} {% endcomment %}
+    {% comment %} {% if latest_question_list %}
+        <ul>
+        
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %} {% endcomment %}

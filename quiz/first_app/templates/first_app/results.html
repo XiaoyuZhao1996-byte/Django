@@ -1,0 +1,16 @@
+{% extends "polls/base.html" %}
+{% block body_block %}
+<h1>Results for {{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+{% comment %} <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<a href="{% url 'polls:reason_display' %}">Check all the reasons for all questions given by users</a>
+<a href="{% url 'polls:display_voter' %}"> See users' operations. </a>
+<a href="{% url 'polls:add_reason1' question.id %}"> Have more than one reason? Click here. </a> {% endcomment %}
+
+{% endblock %}

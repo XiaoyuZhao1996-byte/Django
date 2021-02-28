@@ -1,0 +1,10 @@
+<h2> Result: votes for the question: {{ question }} (End)</h2>
+  The votes for each choice are:
+  
+  <ul>
+    {% for choice in question.choice_in_question.all %}
+    
+      <li>{{choice}} -- {{choice.votes}}
+      </li>
+    {% endfor %}
+  </ul>

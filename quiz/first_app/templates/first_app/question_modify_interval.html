@@ -1,0 +1,51 @@
+{% extends 'first_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <form method="POST" action="">
+      {% csrf_token %}
+        {{ choice_form.as_p }}
+        <input type="submit" name="" value="Modify">
+      </form>
+      
+      {% comment %} <h1>You can modify your question now</h1>
+        <form method="POST" action="{% url 'first_app:question_status_modify' question.id %}">
+        {% csrf_token %}
+          <p> The old question is: {{question}}</p>
+          <label for="question_text">Modified question:</label>
+          <input type="text" name="question_text" placeholder="question_text">
+          <p></p>
+          {% comment %} <p> The old choices are: </p>
+          <p>{% for choice in question.question.all %}
+                Old choice{{ forloop.counter }}: {{choice}} <p>
+                <label for="choice_text{{forloop.counter}}">New choice{{forloop.counter}}:</label>
+                <input type="text" name="choice_text{{ forloop.counter }}"  placeholder="choice_text">  <p>
+              {% endfor %}
+          </p> {% endcomment %}
+         {% comment %}
+          <p> The old choices are: </p>
+          {% for choice in question.question.all %}
+            <p> Old choice {{ forloop.counter }}: {{choice}} <button type="submit" name="delete_items" value="{{ choice.pk }}">X</button></p>
+            {% comment %} <input type="submit" name="delete_items" value="{{ choice.pk }}"> {% endcomment %}
+          {% comment %}
+          {% endfor %}
+
+          <label for="choice_text">New choice:</label>
+          <input type="text" name="choice_text" placeholder="choice_text">  <p>
+
+          {% comment %} <p>The previous status is: {{ question.status }}</p> 
+          <p>Change question status: 
+          {% comment %} <p><select name="status" id="status" value = "{{choice.id}}" > {% endcomment %}
+          {% comment %}
+              <label for="status" placeholder="question_status" ></label>
+              <select name="status">
+                <option id = '0' value ="0">0 Draft</option>
+                <option id = '1' value ="1">1 Voting</option>
+                <option id = '2' value ="2">2 End</option>
+                <option id = '3' value ="3">3 Delete</option>
+              </select>
+          <input type="submit" name="" value="modify">
+        </form> {% endcomment %}
+    </div>
+  </div>
+{% endblock %}

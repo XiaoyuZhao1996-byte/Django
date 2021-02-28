@@ -1,0 +1,57 @@
+{% comment %} 
+{% if error_message %}
+  <p><strong>{{ error_message }}</strong></p>
+{% endif %} {% endcomment %}
+
+{% comment %} {% for choice in question.choice_set.all %}
+  <form action="{% url 'first_app:vote' choice.id %}" method="POST">
+  {% csrf_token %} {% endcomment %}
+{% comment %} {% if user.is_superuser %}  {% endcomment %}
+  <h2> User's votes for the question: {{ question }} (ongoing)</h2>
+  The votes for each choice are:
+  
+  <ul>
+    {% for choice in question.choice_in_question.all %}
+    
+      <li>{{choice}} -- {{choice.votes}}
+      </li>
+    {% endfor %}
+  </ul>
+  <form method="POST" action="">
+      {% csrf_token %}
+        {{ question_form.as_p}}
+        <input type="submit" name="" value="Modify">
+  </form>
+
+
+  {% comment %} <form method="POST" action="{% url 'first_app:results' question.id %}"question.id %}">
+    {% csrf_token %}
+    Change question status: 
+          {% comment %} <p><select name="status" id="status" value = "{{choice.id}}" > {% endcomment %}
+  {% comment %}             <label for="status" placeholder="question_status" ></label>
+              <select name="status">
+                <option id = '0' value ="0">0 Draft</option>
+                <option id = '1' value ="1">1 Voting</option>
+                <option id = '2' value ="2">2 End</option>
+                <option id = '3' value ="3">3 Delete</option>
+              </select>
+          <input type="submit" name="" value="modify">
+  </form> {% endcomment %}
+  
+{% comment %} {% else %}  
+
+  <form action="{% url 'first_app:vote' question.id %}" method="POST">
+    {% csrf_token %}
+  
+    {% for choice in question.question.all %}
+      <input type="radio" name="choice" id="choice{{ forloop.counter }}"  value="{{ choice.id }}" >
+      <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br/>
+    {% endfor %}
+
+    <label for="reason"> Please give the reason:</label>
+    <input type="text" name ="reason" value="" required ="required" > 
+
+    <input type="submit" value="Vote"/> 
+  </form>
+
+{% endif %} {% endcomment %}
